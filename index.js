@@ -31,6 +31,12 @@ async function run() {
       .db("CraftSpectrumDB")
       .collection("CraftItems");
 
+    // getting all the craft items
+    app.get("/crafts", async (req, res) => {
+      const result = await craftCollection.find().toArray();
+      res.send(result);
+    });
+
     //post a craft item
     app.post("/crafts", async (req, res) => {
       const craft = req.body;
