@@ -37,6 +37,20 @@ async function run() {
       res.send(result);
     });
 
+    // getting my craft items by email
+    app.get("/crafts/:email", async (req, res) => {
+      const userEmail = req.params.email;
+      const query = { email: userEmail };
+      const result = await craftCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    //getting the recent craft items
+    app.get("/recentCrafts", async (req, res) => {
+      const result = await craftCollection.find().limit(6).toArray();
+      res.send(result);
+    });
+
     // getting single craft item
     app.get("/crafts/:id", async (req, res) => {
       const id = req.params.id;
@@ -59,6 +73,9 @@ async function run() {
       const result = await craftCollection.deleteOne(query);
       res.send(result);
     });
+
+    // updating a data by id
+    // app.put('/crafts/:id', (req, res))
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
