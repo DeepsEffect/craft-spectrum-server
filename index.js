@@ -83,9 +83,9 @@ async function run() {
 
       const newUpdatedCraft = {
         $set: {
-          image: updateCraft.name,
+          image: updateCraft.image,
           item_name: updateCraft.item_name,
-          subcategory_Name: updateCraft.subcategory_Name,
+          subcategory_Name: updateCraft.subcategory_name,
           short_description: updateCraft.short_description,
           price: updateCraft.price,
           rating: updateCraft.rating,
