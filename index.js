@@ -38,7 +38,7 @@ async function run() {
     });
 
     // getting my craft items by email
-    app.get("/crafts/:email", async (req, res) => {
+    app.get("/myCrafts/:email", async (req, res) => {
       const userEmail = req.params.email;
       const query = { email: userEmail };
       const result = await craftCollection.find(query).toArray();
@@ -75,7 +75,32 @@ async function run() {
     });
 
     // updating a data by id
-    // app.put('/crafts/:id', (req, res))
+    app.put("/crafts/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateCraft = req.body;
+
+      const newUpdatedCraft = {
+        $set: {
+          image: updateCraft.name,
+          item_name: updateCraft.item_name,
+          subcategory_Name: updateCraft.subcategory_Name,
+          short_description: updateCraft.short_description,
+          price: updateCraft.price,
+          rating: updateCraft.rating,
+          customization: updateCraft.customization,
+          processing_time: updateCraft.processing_time,
+          stock_status: updateCraft.stock_status,
+        },
+      };
+      const result = await craftCollection.updateOne(
+        filter,
+        newUpdatedCraft,
+        options
+      );
+      res.send(result)
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
